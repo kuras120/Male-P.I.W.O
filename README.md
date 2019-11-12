@@ -31,6 +31,7 @@ To persist after reboot, add this entry to `/etc/fstab`
 ```
 sshfs#pi@192.168.0.32:/home/pi /mnt/pi
 ```
+WARNING: if during boot pi is offline or mounting somehow fails, the boot may fail - use with caution
 ## Bluetooth speaker configuration
 Speaker MAC address: `8D:16:E5:43:83:47`
 
