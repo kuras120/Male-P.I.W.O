@@ -7,6 +7,7 @@ from matrix.bindings.python.samples.samplebase import SampleBase
 
 from loader import ANIMATIONS_ROOT_DIR
 from loader.animation import AnimationMeta, load_animation, Animation
+from sound.bt import play_sound_in_background
 
 
 class SimpleSquare(SampleBase):
@@ -27,7 +28,7 @@ class SimpleSquare(SampleBase):
                 offset_canvas.SetPixel(
                     x, y, matrix[y][x][0], matrix[y][x][1], matrix[y][x][2])
         offset_canvas = self.matrix.SwapOnVSync(offset_canvas)
-        time.sleep(period_time)
+        time.sleep(0.002)
 
     def get_frames(self, offset_canvas):
         frames = []
@@ -49,6 +50,9 @@ if __name__ == "__main__":
     # sudo python runtext.py  --led-no-hardware-pulse=true --led-slowdown-gpio=2 --led-rows=16 --led-cols=32 --led-pwm-lsb-nanoseconds=500
     anim_path = os.path.join(ANIMATIONS_ROOT_DIR, 'test_animation.zip')
     animation: Animation = load_animation(anim_path)
+    sound_path = os.path.join(ANIMATIONS_ROOT_DIR, 'test_animation', animation.meta.music_file)
+    play_sound_in_background(sound_path, 0.5)
+
     simple_square = SimpleSquare(animation.meta, animation.frames)
     if not simple_square.process():
         simple_square.print_help()
