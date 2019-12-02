@@ -21,18 +21,17 @@ class MiniPiwo(object):
     def usleep(self, value):
         time.sleep(value / 1000000.0)
 
-    def load_animation(self, path: str) -> Animation:
+    def load_animation(self, path: str) -> None:
         print("Extracting animation file...")
         animation_dir = unzip_animation_file(path)
         print("Adjusting frames file...")
         resize_animation_frames(animation_dir)
         print("Loading meta...")
-        meta: AnimationMeta = load_meta(animation_dir)
+        self.meta = load_meta(animation_dir)
         print("Loading frames...")
-        frames = load_animation_frames(animation_dir)
-        return Animation(meta, frames)
+        self.frames = load_animation_frames(animation_dir)
 
-    def init_from_args(self):
+    def init_from_args(self) -> None:
         self.args = self.parser.parse_args()
         self.load_animation(self.args.file)
         options = RGBMatrixOptions()
@@ -54,7 +53,7 @@ class MiniPiwo(object):
 
         self.matrix = RGBMatrix(options=options)
 
-    def process(self):
+    def process(self) -> bool:
         self.init_from_args()
         try:
             # Start loop
@@ -66,7 +65,7 @@ class MiniPiwo(object):
 
         return True
 
-    def run(self):
+    def run(self) -> None:
         print("Running")
         offset_canvas = self.matrix.CreateFrameCanvas()
         while True:
