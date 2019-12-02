@@ -65,12 +65,12 @@ def load_meta(animation_dir: str) -> AnimationMeta:
 
 
 def load_animation(path: str) -> Animation:
+    print("Extracting animation file...")
     animation_dir = unzip_animation_file(path)
+    print("Adjusting frames file...")
     resize_animation_frames(animation_dir)
+    print("Loading meta...")
     meta: AnimationMeta = load_meta(animation_dir)
+    print("Loading frames...")
     frames = load_animation_frames(animation_dir)
     return Animation(meta, frames)
-
-
-# anim_path = os.path.join(ANIMATIONS_ROOT_DIR, 'test_animation.zip')
-# print(load_animation(anim_path).meta.__dict__)
