@@ -32,6 +32,7 @@ def unzip_animation_file(file_path: str) -> str:
     :param file_path:
     :return:
     """
+    print("unzipping file ...", file_path)
     with zipfile.ZipFile(file_path, "r") as zip_ref:
         zip_ref.extractall(ANIMATIONS_ROOT_DIR)
     return os.path.join(ANIMATIONS_ROOT_DIR, extract_file_name(file_path))
