@@ -8,8 +8,9 @@ def play_sound(path: str, volume: float) -> None:
     print(path, volume)
     volume_val: int = int(volume * PAPLAY_MAX_VOLUME_VAL)
     cmd: str = "paplay {} --volume {} -v".format(path, volume_val)
-    process = subprocess.Popen(cmd, shell=True)
-    process.wait()
+    cmd1 = subprocess.Popen(['echo', 'simbadcore'], stdout=subprocess.PIPE)
+    cmd2 = subprocess.Popen(['sudo', '-S', cmd], stdin=cmd1.stdout, stdout=subprocess.PIPE)
+    cmd2.wait()
     return
 
 
