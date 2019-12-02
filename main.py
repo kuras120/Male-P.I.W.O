@@ -74,15 +74,11 @@ class MiniPiwo(object):
                 self.draw_frame(offset_canvas, frame, self.meta.frame_duration)
 
     def draw_frame(self, offset_canvas, matrix, period_time):
-        start = time.time()
         for y in range(0, offset_canvas.height):
             for x in range(0, self.matrix.width):
                 offset_canvas.SetPixel(
                     x, y, matrix[y][x][0], matrix[y][x][1], matrix[y][x][2])
         offset_canvas = self.matrix.SwapOnVSync(offset_canvas)
-        end = time.time()
-        print("Draw time: {}".format(end - start))
-        time.sleep(0.002)
 
 
 if __name__ == "__main__":
