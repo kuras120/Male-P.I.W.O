@@ -3,10 +3,10 @@ import argparse
 import sys
 import time
 
-from loader.animation import AnimationMeta, Animation, unzip_animation_file, \
-    load_meta
+from loader.animation import AnimationMeta, unzip_animation_file, load_meta
 from loader.frame import resize_animation_frames, load_animation_frames
 from matrix.bindings.python.rgbmatrix import RGBMatrixOptions, RGBMatrix
+from sound.bt import play_sound_in_background
 
 
 class MiniPiwo(object):
@@ -55,6 +55,7 @@ class MiniPiwo(object):
 
     def process(self) -> bool:
         self.init_from_args()
+        play_sound_in_background(piwo.meta.music_file, 0.5)
         try:
             # Start loop
             print("Press CTRL-C to stop sample")
