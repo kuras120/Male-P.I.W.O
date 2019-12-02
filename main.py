@@ -17,20 +17,6 @@ class MiniPiwo(object):
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("-f", "--file", action="store", default="", type=str)
-        self.parser.add_argument("-r", "--led-rows", action="store", default=16, type=int)
-        self.parser.add_argument("--led-cols", action="store", default=32, type=int)
-        self.parser.add_argument("-c", "--led-chain", action="store", default=1, type=int)
-        self.parser.add_argument("-P", "--led-parallel", action="store", default=1, type=int)
-        self.parser.add_argument("-p", "--led-pwm-bits", action="store", default=11, type=int)
-        self.parser.add_argument("-b", "--led-brightness", action="store", default=100, type=int)
-        self.parser.add_argument("--led-scan-mode", action="store", default=1, choices=range(2), type=int)
-        self.parser.add_argument("--led-pwm-lsb-nanoseconds", action="store", default=500, type=int)
-        self.parser.add_argument("--led-show-refresh", action="store_true")
-        self.parser.add_argument("--led-slowdown-gpio", action="store", default=2, type=int)
-        self.parser.add_argument("--led-rgb-sequence", action="store", default="RGB", type=str)
-        self.parser.add_argument("--led-pixel-mapper", action="store", default="", type=str)
-        self.parser.add_argument("--led-row-addr-type", action="store", default=0, type=int, choices=[0, 1, 2])
-        self.parser.add_argument("--led-multiplexing", action="store", default=0, type=int)
 
     def usleep(self, value):
         time.sleep(value / 1000000.0)
@@ -51,30 +37,25 @@ class MiniPiwo(object):
         self.load_animation(self.args.file)
         options = RGBMatrixOptions()
 
-        options.rows = self.args.led_rows
-        options.cols = self.args.led_cols
-        options.chain_length = self.args.led_chain
-        options.parallel = self.args.led_parallel
-        options.row_address_type = self.args.led_row_addr_type
-        options.multiplexing = self.args.led_multiplexing
-        options.pwm_bits = self.args.led_pwm_bits
-        options.brightness = self.args.led_brightness
-        options.pwm_lsb_nanoseconds = self.args.led_pwm_lsb_nanoseconds
-        options.led_rgb_sequence = self.args.led_rgb_sequence
-        options.pixel_mapper_config = self.args.led_pixel_mapper
-        if self.args.led_show_refresh:
-            options.show_refresh_rate = 1
-
-        if self.args.led_slowdown_gpio is not None:
-            options.gpio_slowdown = self.args.led_slowdown_gpio
-        if self.args.led_no_hardware_pulse:
-            options.disable_hardware_pulsing = True
+        options.rows = 16
+        options.cols = 32
+        options.chain_length = 1
+        options.parallel = 1
+        options.row_address_type = 0
+        options.multiplexing = 0
+        options.pwm_bits = 11
+        options.brightness = 100
+        options.pwm_lsb_nanoseconds = 500
+        options.led_rgb_sequence = "RGB"
+        options.pixel_mapper_config = ""
+        options.disable_hardware_pulsing = True
+        options.gpio_slowdown = 2
+        options.show_refresh_rate = 1
 
         self.matrix = RGBMatrix(options=options)
 
     def process(self):
         self.init_from_args()
-        self.load_animation()
         try:
             # Start loop
             print("Press CTRL-C to stop sample")
